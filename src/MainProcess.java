@@ -13,41 +13,10 @@ public class MainProcess {
         String CompoundCondition = sc.nextLine();
         DCC dcc=new DCC();
         /**
-         *  test &&
-         */
-//        List<String> decomposeAndResult = dcc.DecomposeAnd(CompoundConditions);
-//        for(int i=0;i<decomposeAndResult.size();i++)
-//        {
-//            System.out.println(decomposeAndResult.get(i));
-//        }
-        /**
-         *  test ||
-         */
-//        List<String> decomposeOrResult = dcc.DecomposeOr(CompoundConditions);
-//        for(int i=0;i<decomposeOrResult.size();i++)
-//        {
-//            System.out.println(decomposeOrResult.get(i));
-//        }
-        /**
-         *  test && ||
-         */
-//        System.out.println("Decompose $$ and ||:");
-//        List<String> decomposeAndOrResult = dcc.DecomposeAndOr(CompoundConditions);
-//        System.out.println("The number of the total paths is: "+decomposeAndOrResult.size());
-//        for(int i=0;i<decomposeAndOrResult.size();i++){
-//            System.out.println(decomposeAndOrResult.get(i));
-//        }
-        /**
-         * test DealWithBrackets
-         */
-//        List<Integer> bracketsIndex = dcc.DealWithBrackets(CompoundConditions.trim());
-//        for(int i=0;i<bracketsIndex.size();i+=2){
-//            System.out.println("(:"+bracketsIndex.get(i)+", ):"+bracketsIndex.get(i+1));
-//        }
-        /**
          * test DecomposedConditions
          */
-        List<String> result = dcc.DecomposeConditions(CompoundCondition);
+        List<String> result = dcc.DecomposeCompoundConditions(CompoundCondition);
+        System.out.println("路径数："+result.size());
         for(int i=0;i<result.size();i++){
             System.out.println(result.get(i));
         }
