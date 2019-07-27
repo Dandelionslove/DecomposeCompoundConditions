@@ -70,12 +70,24 @@ public class DCC {
     }
 
     /**
+     * 处理一个单独的条件表达式，如a>2, b!=3等，并返回其路径结果
+     * @param s
+     * @return
+     */
+    private List<String> DecomposeSingleCondition(String s) {
+        List<String> decomposeResult = new ArrayList<>();
+        decomposeResult.add("T"+s.trim());
+        decomposeResult.add("F!("+s.trim()+")");
+        return decomposeResult;
+    }
+
+    /**
      * deal with the composed condition of "&&" and "||" without ()
      *
      * @param s
      * @return
      */
-    private List<String> DecomposeAndOr(String s) {
+    private List<String> DecomposeAndOr(String s){
         String[] subComposedConditions = s.split("\\|\\|");
         List<String> decomposeResult = new ArrayList<>();
         List<List<String>> decompose = new ArrayList<>();
@@ -341,7 +353,7 @@ public class DCC {
                         if(conditionBeginIndex!=-1){
                             String subS = s.substring(conditionBeginIndex,i);
                             conditionBeginIndex=-1;
-                            List<String> L = DecomposeAndOr(subS);
+                            List<String> L = DecomposeSingleCondition(subS);
                             conditionListStack.push(L);
                         }
                         // cBIS栈顶元素出栈
@@ -382,10 +394,10 @@ public class DCC {
                         if (conditionBeginIndex != -1) {
                             String subS = s.substring(conditionBeginIndex, i);
                             conditionBeginIndex = -1;
-                            List<String> L2 = DecomposeAndOr(subS);  // 注：此处先不要放入条件栈，主要是为了比较括号栈中的值同条件栈的数量
+                            List<String> L2 = DecomposeSingleCondition(subS);  // 注：此处先不要放入条件栈，主要是为了比较括号栈中的值同条件栈的数量
                             if(!conditionalBracketsIndexStack.isEmpty()){
                                 int peekCBSize=(int)conditionalBracketsIndexStack.peek()+1;
-                                if (!conditionListStack.isEmpty()&&conditionalBracketsIndexStack.size()>peekCBSize) {
+                                if (!conditionListStack.isEmpty()&&conditionListStack.size()>peekCBSize) {
                                     String peekSymbol = (String) conditionListStack.peek();
                                     if (peekSymbol.equals("&&")) {
                                         String symbol = (String) conditionListStack.pop();
@@ -426,7 +438,7 @@ public class DCC {
             if(i==s.length()-1){
                 if(conditionBeginIndex!=-1){
                     String subS = s.substring(conditionBeginIndex);
-                    List<String> L = DecomposeAndOr(subS);
+                    List<String> L = DecomposeSingleCondition(subS);
                     conditionListStack.push(L);
                 }
                 while (conditionListStack.size()>1){
