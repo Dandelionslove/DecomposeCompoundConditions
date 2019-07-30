@@ -18,7 +18,7 @@ public class MainProcess {
         List<String> result = dcc.DecomposeCompoundConditions(CompoundCondition);
         System.out.println("路径数："+result.size());
         for(int i=0;i<result.size();i++){
-            System.out.println(result.get(i));
+            System.out.println((i+1)+": "+result.get(i));
         }
     }
 
